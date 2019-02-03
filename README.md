@@ -12,17 +12,6 @@ Database adı: Storage
 
 ```js
 
-const config = {
-     prefix:"controllerStorage",
-     uniqueKey:"_id",
-     sync : true,
-     timestamp:{
-         enable:true,
-         type:"toLocaleString()"
-     }
- }
- const db = new Database(config)
-
  **** veri ekle ****
 const config = {
      prefix:"controllerStorage",
