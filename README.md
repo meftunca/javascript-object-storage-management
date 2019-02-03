@@ -2,6 +2,15 @@
 Web, server ve mobil için depolama yönetimi sistemi
 
 ```js
+*** Tablo Yapısı ****
+Database adı: Storage
+    -> Tablo Adı: User
+    -> Tablo Adı: Posts
+    -> Tablo Adı: Messages
+```
+
+
+```js
 
 const config = {
      prefix:"controllerStorage",
