@@ -1,117 +1,135 @@
-# javascript-object-storage-management
-Web, server ve mobil için depolama yönetimi sistemi
+
+## React native için yönetilebilir AsyncStorage sınıfı
+
+### Amaç
+***React native*** için 3.paket uygulama ihtiyacı duymadan ***react native*** ile gelen **AsyncStorage** kullanarak yerel veritabanı kullanmayı sağlamak.
+
+#### Çalışma mantığı
+İlk önce AsyncStorage ile yeni bir item oluşturulur veya hali hazırda varsa alınır. Class içinde bir değere bu item atanır. İtem'ın varsayılan değeri [ ] boş bir dizidir. Bu sebeple atanan değer push methoduyla diziye aktarılır. Sınıfın save methoduylada AsyncStorage güncellenir.
+
+#### Database Oluşturma
 
 ```js
-*** Tablo Yapısı ****
-Database adı: Storage
-    -> Tablo Adı: User
-    -> Tablo Adı: Posts
-    -> Tablo Adı: Messages
+	import DataStore from "javascript-object-storage-management'
+	const DB = new DataStore("user");
 ```
 
+#### Veri ekleme
 
 ```js
+	 const data = {
+		"id":  18,
+		"first_name":  "Hodge",
+		"last_name":  "Attaway",
+		"email":  "hattawayh@yellowpages.com",
+		"gender":  "Male",
+		"ip_address":  "248.133.97.218"
+		};
+	DB.set(data);	
+```
+#### Çoklu Veri ekleme
 
- **** veri ekle ****
-const config = {
-     prefix:"controllerStorage",
-     uniqueKey:"_id",
-     sync : true,
-     timestamp:{
-         enable:true,
-         type:"toLocaleString()"
-     }
- }
- const db = new Database(config)
+```js
+	 const data = [
+		 {
+			"id":  18,
+			"first_name":  "Hodge",
+			"last_name":  "Attaway",
+			"email":  "hattawayh@yellowpages.com",
+			"gender":  "Male",
+			"ip_address":  "248.133.97.218"
+		},
+		{
+			"id":  19,
+			"first_name":  "Onida",
+			"last_name":  "Grouer",
+			"email":  "ogroueri@nationalgeographic.com",
+			"gender":  "Female",
+			"ip_address":  "179.7.171.189"
+		}
+	];
+	DB.set(data);	
+```
+##### Veri Çekme
 
- **** veri ekle ****
- @example 
- db.create(data) // yeni veri oluştur
-  /-* parametre içerikleri 
-  create(
-      data:data, // eklenecek veriler
-      timestamp:true, // created_at ve updated_at eklenir
-      dataMultiple:true // data çoğul ise veriler döngü içinde eklenir
-      ) 
+```js
+	DB.get();//tüm verileri çeker
+	DB.get(5);//ilk 5 veriyi çeker	
+	DB.take(5);//ilk 5 veriyi çeker
+    DB.takeRight(5);//son 5 veriyi çeker
+	DB.slice(4,10);//indis değerleri 4-10 arasında olan verileri çeker    
+```
 
+##### Veri Güncelleme
+Veri güncellenirken güncellenecek nesneyi bulmak için nesneye ait değerleri **sorguNesnesi**'ne ekleyerek sorgulamak tüm nesnelerin **yeniDeger**'deki verilerle güncellenmesini engelleyecektir.
+```js
+	let yeniDeger ={first_name:"meftunca"};
+	let sorguNesnesi = {id:12}
+	DB.update(yeniDeger,sorguNesnesi);//tüm verileri çeker
+```
 
- **** verileri çek ****
- @example 
- db.get() // son veriyi çeker
+##### Veri Silme
 
- @example 
- db.getAll() // tüm verileri çeker
- 
- @example 
- db.getInMonth() // 30 gün içindeki verileri çeker
+```js
+	DB.delete(id,20);
+```
 
- @example 
- db.getInMonth(14) // 14 gün içindeki verileri çeker
+##### Veritabanını Sıfırlama
+```js
+	DB.destroy();
+```
 
- @example 
- db.getInWeek() // hafta içinde eklenen verileri çeker
+### Sorgular
+#### Sıralama Fonksiyonları
 
- @example 
- db.getInDay() // gün içinde eklenen verileri çeker
-    
-    *** sorgularla veri çekme  ***
-    db = db.where("a","==",a)
-    db.get()
+##### sortBy => sort(key="id",type="asc" || "desc")
+```js
+	DB.sortBy("first_name","desc")
+```
+##### orderBy => orderBy(keyArray, typeArray)
+```js 
+let users = [//örnek dizi
+  { 'user': 'fred',   'age': 48 },
+  { 'user': 'barney', 'age': 34 },
+  { 'user': 'fred',   'age': 40 },
+  { 'user': 'barney', 'age': 36 }
+];
+	DB.orderBy(['user','age'], ['asc','desc'])
+```
 
- **** Düzenlemeler ****
- 
- @example 
- db.where("id","==",id).delete() // veriyi sil
- //eğer verinin karşılığı birden fazlaysa ...
- @example 
- db.where("name","==",name).deleteAll() // veriyi sil
+#### Seçim Fonksiyonları
 
+##### select => select(keyArray)
+```js
+	DB.select("user","age");//girilen anahtar isimlerini seçer.(sql select gibi çalışır)
+```
+##### notSelect => notSelect(keyArray)
+```js
+	DB.notSelect("user","age");//girilen anahtar isimleri dışındaki değerleri seçer.
+```
 
- **** Koşullar ****
- @example 
- db.where("a","==",a) //tekil where :)
+#### Arama Fonksiyonları
+##### find => find(Array || Object ||  Function )
+[Lodashta inceleyin](https://lodash.com/docs/4.17.11#find)
+```js
+let data= [
+{ 'user': 'barney', 'age': 36, 'active': true },
+{ 'user': 'fred', 'age': 40, 'active': false },
+{ 'user': 'pebbles', 'age': 1, 'active': true }
+];
+DB.find( function(o) { return o.age < 40; });
+// => 'barney'
+DB.find( { 'age': 1, 'active': true });
+// => 'pebbles'
+DB.find( ['active', false]);
+// => 'fred'
+DB.find( 'active');
+```
 
- @example 
- db.where("a","!=",a) //tekil where :)
+#### difference => difference(key, value)
+Veritabanı içinden girilen key, value çiftiyle aynı olamayan verileri listeler
 
- @example 
- db.wherePlural([ //çoğul and where :)
-     ["a","==",a],
-     ["a","==",b],
-     ["c","==",b],
- ])
-
- @example 
- db.orWherePlural([ //çoğul or where :)
-     ["a","==",a],
-     ["a","==",b],
-     ["c","==",b],
- ])
-
- @example 
- db.whereGroup({ //where group :)
-     $and:[
-         ["a","==",a],
-        ["a","==",b],
-        ["c","==",b],
-     ],
-    $or:[
-        ["a","==",a],
-        ["a","==",b],
-        ["c","==",b],
-     ],
- })
-
-@example 
-db.limit(100) // Limit :)
-
-@example 
-db.take(10,24) // take :)
-
-@example 
-db.order("id") // order :)
-
-@example 
-db.select("id","name","created_at") // select :)
-
+```js
+	DB.difference("id",3);
+	//=>[{id:1,...},{id:2,...}....]
 ```
