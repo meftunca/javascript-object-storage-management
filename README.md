@@ -2,7 +2,7 @@
 ## React native için yönetilebilir AsyncStorage sınıfı
 
 ### Amaç
-***React native*** ve ***Web*** için 3.paket uygulama ihtiyacı duymadan ***react native*** ile gelen **AsyncStorage** kullanarak yerel veritabanı kullanmayı sağlamak.
+***React native*** ve ***Web*** için 3.paket uygulama ihtiyacı duymadan  yerel depoalama kullanımını sağlamak.
 
 #### Çalışma mantığı
 İlk önce AsyncStorage ile yeni bir item oluşturulur veya hali hazırda varsa alınır. Class içinde bir değere bu item atanır. İtem'ın varsayılan değeri [ ] boş bir dizidir. Bu sebeple atanan değer push methoduyla diziye aktarılır. Sınıfın save methoduylada AsyncStorage güncellenir.
