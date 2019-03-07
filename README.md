@@ -10,7 +10,7 @@
 #### Database Oluşturma
 
 ```js
-	import DataStore from "javascript-object-storage-management'
+	import DataStore from "javascript-object-storage-management"
 	const DB = new DataStore("user");
 ```
 
