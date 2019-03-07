@@ -3,9 +3,9 @@
   "version": "1.0.1",
   "description":"React native için veritabanı yönetim sistemi",
   "author":"muhammed burak şentürk",
-  "email" : "buraksenturk25@gmail.com"
-  "license": "ISC"
-  "homepage": "https://github.com/meftunca/javascript-object-storage-management"
+  "email" : "buraksenturk25@gmail.com",
+  "license": "ISC",
+  "homepage": "https://github.com/meftunca/javascript-object-storage-management",
   "main":"index.js",
   "dependencies": {
     "buffer": "^5.2.1",
