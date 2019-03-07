@@ -2,7 +2,7 @@
 ## React native için yönetilebilir AsyncStorage sınıfı
 
 ### Amaç
-***React native*** için 3.paket uygulama ihtiyacı duymadan ***react native*** ile gelen **AsyncStorage** kullanarak yerel veritabanı kullanmayı sağlamak.
+***React native*** ve ***Web*** için 3.paket uygulama ihtiyacı duymadan ***react native*** ile gelen **AsyncStorage** kullanarak yerel veritabanı kullanmayı sağlamak.
 
 #### Çalışma mantığı
 İlk önce AsyncStorage ile yeni bir item oluşturulur veya hali hazırda varsa alınır. Class içinde bir değere bu item atanır. İtem'ın varsayılan değeri [ ] boş bir dizidir. Bu sebeple atanan değer push methoduyla diziye aktarılır. Sınıfın save methoduylada AsyncStorage güncellenir.
@@ -10,8 +10,9 @@
 #### Database Oluşturma
 
 ```js
+import  {AsyncStorage} from "react-native";
 import DataStore from "javascript-object-storage-management"
-const DB = new DataStore("user");
+const DB = new DataStore("user",AsyncStorage);//localStorage yada sessionStorage
 ```
 
 #### Veri ekleme
