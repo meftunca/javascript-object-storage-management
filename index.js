@@ -1,11 +1,11 @@
-import { AsyncStorage } from "react-native";
 import uuid from "react-native-uuid";
 import _ from "lodash";
 import Filter from "./lib/filter";
 
 export default class DataStore extends Filter {
-  constructor(db) {
-    super(db);
+  constructor(db, storage) {
+    super(db, storage);
+    this.storage = storage;
     this.destroy();
     this.prefix = "dataStore@";
     this.dbName = this.prefix + db;
@@ -15,7 +15,7 @@ export default class DataStore extends Filter {
   }
   async dataStore() {
     try {
-      const hasDataStore = await AsyncStorage.getItem(this.dbName);
+      const hasDataStore = await this.storage.getItem(this.dbName);
       this.db = hasDataStore != null ? this.selectDb() : this.createDb();
     } catch (e) {
       throw new Error(e);
@@ -24,7 +24,7 @@ export default class DataStore extends Filter {
 
   async selectDb() {
     try {
-      const dataStore = await AsyncStorage.getItem(this.dbName);
+      const dataStore = await this.storage.getItem(this.dbName);
       this.db = JSON.parse(dataStore);
     } catch (e) {
       throw new Error(e);
@@ -32,7 +32,7 @@ export default class DataStore extends Filter {
   }
   async createDb() {
     try {
-      const dataStore = await AsyncStorage.setItem(this.dbName, JSON.stringify([]));
+      const dataStore = await this.storage.setItem(this.dbName, JSON.stringify([]));
       this.db = dataStore;
     } catch (e) {
       throw new Error(e);
@@ -40,7 +40,7 @@ export default class DataStore extends Filter {
   }
   async save() {
     try {
-      await AsyncStorage.setItem(this.dbName, JSON.stringify(this.db));
+      await this.storage.setItem(this.dbName, JSON.stringify(this.db));
     } catch (e) {
       throw new Error(e);
     }
@@ -76,7 +76,7 @@ export default class DataStore extends Filter {
 
   async destroy() {
     try {
-      await AsyncStorage.removeItem(this.dbName);
+      await this.storage.removeItem(this.dbName);
     } catch (e) {
       throw new Error(e);
     }
