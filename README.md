@@ -49,7 +49,7 @@ DB.set(data);
 		"ip_address":  "179.7.171.189"
 	}
 ];
-DB.set(data);	
+DB.multipleSet(data);	
 ```
 ##### Veri Çekme
 
@@ -66,7 +66,7 @@ Veri güncellenirken güncellenecek nesneyi bulmak için nesneye ait değerleri 
 ```js
 let yeniDeger ={first_name:"meftunca"};
 let sorguNesnesi = {id:12}
-DB.update(yeniDeger,sorguNesnesi);//tüm verileri çeker
+DB.update(yeniDeger,sorguNesnesi);
 ```
 
 ##### Veri Silme
@@ -75,9 +75,12 @@ DB.update(yeniDeger,sorguNesnesi);//tüm verileri çeker
 DB.delete(id,20);
 ```
 ##### Verileri Kaydetme
+
 ```js
 DB.save();
 ```
+> Değişiklikleri kaydetmezseniz yeni veriler depolanmaz
+
 ##### Veritabanını Sıfırlama
 ```js
 DB.destroy();
