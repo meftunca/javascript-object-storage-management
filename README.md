@@ -90,16 +90,7 @@ DB.destroy();
 ```js
 DB.sortBy("first_name","desc")
 ```
-##### orderBy => orderBy(keyArray, typeArray)
-```js 
-let users = [//örnek dizi
- { 'user': 'fred',   'age': 48 },
- { 'user': 'barney', 'age': 34 },
- { 'user': 'fred',   'age': 40 },
- { 'user': 'barney', 'age': 36 }
-];
-DB.orderBy(['user','age'], ['asc','desc'])
-```
+ 
 
 #### Seçim Fonksiyonları
 
@@ -121,13 +112,10 @@ let data= [
 	{ 'user': 'fred', 'age': 40, 'active': false },
 	{ 'user': 'pebbles', 'age': 1, 'active': true }
 ];
-DB.find( function(o) { return o.age < 40; });
-// => 'barney'
+ 
 DB.find( { 'age': 1, 'active': true });
 // => 'pebbles'
-DB.find( ['active', false]);
-// => 'fred'
-DB.find( 'active');
+ 
 ```
 
 #### difference => difference(key, value)
