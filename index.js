@@ -1,7 +1,4 @@
-import uuid from "react-native-uuid";
-import _ from "lodash";
 import Filter from "./lib/filter";
-
 export default class DataStore extends Filter {
   constructor(db, storage) {
     super(db, storage);
@@ -49,7 +46,7 @@ export default class DataStore extends Filter {
     dataArray.map(i => this.set(i));
   }
   async set(data) {
-    data.id = data.id || uuid.v1();
+    data.id = data.id || this.db.length + 1;
     try {
       this.db.push(data);
       this.setData(this.db);
