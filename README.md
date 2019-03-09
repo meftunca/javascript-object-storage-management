@@ -1,21 +1,20 @@
-
-## React native için yönetilebilir AsyncStorage sınıfı
-
-### Amaç
-***React native*** ve ***Web*** için 3.paket uygulama ihtiyacı duymadan  yerel depoalama kullanımını sağlamak.
-
-#### Çalışma mantığı
-İlk önce AsyncStorage ile yeni bir item oluşturulur veya hali hazırda varsa alınır. Class içinde bir değere bu item atanır. İtem'ın varsayılan değeri [ ] boş bir dizidir. Bu sebeple atanan değer push methoduyla diziye aktarılır. Sınıfın save methoduylada AsyncStorage güncellenir.
-
-#### Database Oluşturma
+#javascript-object-storage-management
+## For using react-native and web projects 
+```js
+npm install --save javascript-object-storage-management
+//or
+yarn add javascript-object-storage-management
+```
+## Capabilities
+#### Database Creation
 
 ```js
 import  {AsyncStorage} from "react-native";
 import DataStore from "javascript-object-storage-management"
-const DB = new DataStore("user",AsyncStorage);//localStorage yada sessionStorage
+const DB = new DataStore("user",AsyncStorage);//You can use localStorage or sessionStorage.
 ```
 
-#### Veri ekleme
+#### Adding data
 
 ```js
 const data = {
@@ -28,7 +27,7 @@ const data = {
 	};
 DB.set(data);	
 ```
-#### Çoklu Veri ekleme
+#### Adding Multiple Data
 
 ```js
  const data = [
@@ -51,43 +50,44 @@ DB.set(data);
 ];
 DB.multipleSet(data);	
 ```
-##### Veri Çekme
+##### pull data from the database
 
 ```js
-DB.get();//tüm verileri çeker
-DB.get(5);//ilk 5 veriyi çeker	
-DB.take(5);//ilk 5 veriyi çeker
-DB.takeRight(5);//son 5 veriyi çeker
-DB.slice(4,10);//indis değerleri 4-10 arasında olan verileri çeker    
+DB.get();//pulls all data
+DB.get(5);//pulls first 5 data	
+DB.take(5);//pulls first 5 data
+DB.takeRight(5);//pulls last 5 data
+DB.slice(4,10);//pulls data with index values ​​between 4-10    
 ```
 
-##### Veri Güncelleme
-Veri güncellenirken güncellenecek nesneyi bulmak için nesneye ait değerleri **sorguNesnesi**'ne ekleyerek sorgulamak tüm nesnelerin **yeniDeger**'deki verilerle güncellenmesini engelleyecektir.
+##### Data Update
+ 
 ```js
-let yeniDeger ={first_name:"meftunca"};
-let sorguNesnesi = {id:12}
-DB.update(yeniDeger,sorguNesnesi);
+let newValueObject ={first_name:"meftunca"};
+let queryObject = {id:12}
+DB.update(newValueObject,queryObject);
 ```
 
-##### Veri Silme
+##### To delete data from a database
 
 ```js
 DB.delete(id,20);
 ```
-##### Verileri Kaydetme
+##### Saving Data
 
 ```js
 DB.save();
 ```
-> Değişiklikleri kaydetmezseniz yeni veriler depolanmaz
+> New data is not stored unless you save changes
 
-##### Veritabanını Sıfırlama
+##### Resetting Database
 ```js
 DB.destroy();
 ```
 
-### Sorgular
-#### Sıralama Fonksiyonları
+### Database queries
+
+#### Sorting Functions
 
 ##### sortBy => sort(key="id",type="asc" || "desc")
 ```js
@@ -95,20 +95,20 @@ DB.sortBy("first_name","desc")
 ```
  
 
-#### Seçim Fonksiyonları
+#### Selection Functions
 
 ##### select => select(keyArray)
 ```js
-DB.select("user","age");//girilen anahtar isimlerini seçer.(sql select gibi çalışır)
+DB.select("user","age");//Selects key names entered.
 ```
 ##### notSelect => notSelect(keyArray)
 ```js
-DB.notSelect("user","age");//girilen anahtar isimleri dışındaki değerleri seçer.
+DB.notSelect("user","age");//Not selects key names entered..
 ```
 
-#### Arama Fonksiyonları
+#### Search Functions
+
 ##### find => find(Array || Object ||  Function )
-[Lodashta inceleyin](https://lodash.com/docs/4.17.11#find)
 ```js
 let data= [
 	{ 'user': 'barney', 'age': 36, 'active': true },
@@ -117,14 +117,13 @@ let data= [
 ];
  
 DB.find( { 'age': 1, 'active': true });
-// => 'pebbles'
+// => 'pebbles', => 'barney'
  
 ```
 
 #### difference => difference(key, value)
-Veritabanı içinden girilen key, value çiftiyle aynı olamayan verileri listeler
-
+> Lists data that is not the same as the key and value pair entered from within the database
 ```js
 DB.difference("id",3);
-//=>[{id:1,...},{id:2,...}....]
+//=>[{id:1,...},{id:2,...},{id:4,...}....]
 ```
