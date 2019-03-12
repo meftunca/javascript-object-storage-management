@@ -1,3 +1,7 @@
+[![HitCount](http://hits.dwyl.com/senturk/javascript-object-storage-management.svg)](http://hits.dwyl.com/senturk/javascript-object-storage-management)
+
+
+
 [![https://nodei.co/npm/javascript-object-storage-management.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/javascript-object-storage-management.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/javascript-object-storage-management)
 
 # javascript-object-storage-management
