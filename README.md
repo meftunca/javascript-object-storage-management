@@ -1,3 +1,5 @@
+[![https://nodei.co/npm/javascript-object-storage-management.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/javascript-object-storage-management.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/javascript-object-storage-management)
+
 # javascript-object-storage-management
 ## For using react-native and web projects 
 ```js
